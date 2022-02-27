@@ -29,12 +29,14 @@ I hope it will speedup your exploitation workflow.
     * Using Cargo for both compilation and execution of the program
 
         ```sh
+        cd shellcode-myner
         cargo run <binary_to_inspect>
         ```
 
-    * Using Cargo for compilation only and then manually run it at the command-line( Condition: You must be in the `shellcode-myner` main directory ):
+    * Using Cargo for compilation only and then manually run it at the command-line:
             
         ```sh
+        cd shellcode-myner
         cargo build
         target/debug/shellcode-myner <binary_to_inspect>
         ```
