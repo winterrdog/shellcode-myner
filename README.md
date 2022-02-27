@@ -14,7 +14,7 @@ I hope it will speedup your exploitation workflow.
 # ⚙👷 HOW IT WORKS
 * `shellcode-myner` is given a binary file to inspect and parse at the command line.
 * It executes objdump to disassemble the binary's text section and the output of the operation is fed into the analyzer.
-* The analyzer parses each line of output for the shellcode using regex.
+* While using regex the analyzer parses each line of output looking out for the shellcode only.
 * The output of the analysis is printed on screen as a string of shellcode, in a format like this `\x32\xa4\xc2...`.
 
 # 🔧🔨 USAGE 
