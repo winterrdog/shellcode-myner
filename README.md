@@ -26,14 +26,14 @@ I hope it will speedup your exploitation workflow.
 
 2. You can run this program in 2 ways:
 
-    * Using Cargo for both compilation and execution of the program
+    * First, using Cargo for both compilation and execution of the program
 
         ```sh
         cd shellcode-myner
         cargo run <binary_to_inspect>
         ```
 
-    * Using Cargo for compilation only and then manually run it at the command-line:
+    * Second, using Cargo for compilation only and then manually run it at the command-line:
             
         ```sh
         cd shellcode-myner
