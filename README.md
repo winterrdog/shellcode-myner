@@ -38,7 +38,7 @@ I hope it will speedup your exploitation workflow.
         ```sh
         cd shellcode-myner
         cargo build
-        target/debug/shellcode-myner <binary_to_inspect>
+        ./target/debug/shellcode-myner <binary_to_inspect>
         ```
     ## OPTIONAL:
     * You can choose to make a symbolic link for the `shellcode-myner` executable like so:
