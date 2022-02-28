@@ -30,7 +30,7 @@ I hope it will speedup your exploitation workflow.
 
         ```sh
         cd shellcode-myner
-        cargo run <binary_to_inspect>
+        cargo run -- <binary_to_inspect>
         ```
 
     * Second, using Cargo for compilation only and then manually run it at the command-line:
