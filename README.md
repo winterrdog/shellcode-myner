@@ -37,7 +37,7 @@ I hope it will speedup your exploitation workflow.
             
         ```sh
         cd shellcode-myner
-        cargo build --release && strip ./target/release/shellcode-myner
+        cargo build --release
         ./target/release/shellcode-myner <binary_to_inspect>
         ```
     ## OPTIONAL:
