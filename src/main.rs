@@ -23,6 +23,8 @@
         - Email: winterrdog@protonmail.ch
         - Telegram: https://t.me/winterrdog
 */
+extern crate lazy_static;
+extern crate regex;
 
 use lazy_static::lazy_static; // for statically compiling regexes
 use regex::Regex; // For regular expressions
