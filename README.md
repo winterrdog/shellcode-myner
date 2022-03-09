@@ -1,6 +1,3 @@
-# shellcode-myner
-Extracts the shellcode from any specified binary.
-
 # 🔍 INTRODUCTION WITH SOME HISTORY
 `shellcode-myner` is a small hobby project I created to make the process of extracting shellcode from binaries less painful because initially I always had to use `readelf` to get section information ,`dd` to extract the opcodes and `xxd` to reformat `dd`'s output to better fit the style of shellcode output I wanted but with `shellcode-myner` all I needed was a binary file😊. 
 
@@ -24,21 +21,13 @@ I hope it will speedup your exploitation workflow.
     git clone https://github.com/winterrdog/shellcode-myner.git
     ```
 
-2. You can run this program in 2 ways:
+2. You can install this program like so:
 
-    * First, using Cargo for both compilation and execution of the program
-
-        ```sh
-        cd shellcode-myner
-        cargo run -- <binary_to_inspect>
-        ```
-
-    * Second, using Cargo for compilation only and then manually run it at the command-line:
+    - using `install.sh`:
             
         ```sh
         cd shellcode-myner
-        cargo build --release
-        ./target/release/shellcode-myner <binary_to_inspect>
+        ./install.sh
         ```
     ## OPTIONAL:
     * You can choose to make a symbolic link for the `shellcode-myner` executable like so:
@@ -46,7 +35,7 @@ I hope it will speedup your exploitation workflow.
     sudo ln -fs <absolute_path_shellcode_myner> /usr/bin/shellcode-myner
     ```
     #### OR
-    * Add the `<absolute_path_shellcode_myner>` to your `PATH` environment variable.
+    * Add it to your `PATH` environment variable.
 
 # 📝 NOTES
 * `shellcode-myner` is GPLv3 licensed, feel free to contribute something to the project even if it's a typo 😊, or take it a step further by forking and extending it.
