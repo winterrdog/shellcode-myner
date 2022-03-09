@@ -34,8 +34,15 @@ I hope it will speedup your exploitation workflow.
     ```sh
     sudo ln -fs <absolute_path_shellcode_myner> /usr/bin/shellcode-myner
     ```
+    
     #### OR
     * Add it to your `PATH` environment variable.
+
+    
+    Then you can run it simply like any other standard Unix command-line program like `cd` or `ls`:
+    ```sh
+    shellcode-myner <binary_to_inspect>
+    ```
 
 # 📝 NOTES
 * `shellcode-myner` is GPLv3 licensed, feel free to contribute something to the project even if it's a typo 😊, or take it a step further by forking and extending it.
