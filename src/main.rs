@@ -25,11 +25,13 @@
 */
 extern crate lazy_static;
 extern crate regex;
+extern crate textwrap;
 
 use lazy_static::lazy_static; // for statically compiling regexes
 use regex::Regex; // For regular expressions
 use std::process::{Command, Output};
 use std::{env, str}; // to run objdump
+use textwrap::wrap;
 
 fn validate_line(line: &str) -> bool {
     // ref: https://docs.rs/regex/latest/regex/#example-avoid-compiling-the-same-regex-in-a-loop
@@ -65,7 +67,7 @@ fn main() {
 
     // Only process if there's output from objdump
     if !str_output.is_empty() {
-        let lines: Vec<&str> = str_output
+        let lines = str_output
             .split('\n')
             .map(|x| x.trim())
             .collect::<Vec<&str>>();
@@ -74,7 +76,7 @@ fn main() {
         let mut sh_code_len: usize = 0;
 
         // Get disassembly from objdump output
-        for each_single_line in lines {
+        for each_single_line in &lines {
             // If there's sth to process
             if !each_single_line.trim().is_empty() && validate_line(each_single_line) {
                 let asm_and_opcodes: &str = each_single_line
@@ -95,7 +97,13 @@ fn main() {
         // Display extracted shellcode
         println!("\n\t\t⭐ shellcode-myner by winterrdog ⭐\n\t\t🥂 Github: https://github.com/winterrdog \n\t\t🔊 Email: winterrdog@protonmail.ch");
         println!("\nShellcode length: {} bytes.", sh_code_len);
-        println!("Shellcode: \n{}", sh_code);
+
+        // Printing shellcode
+        println!("Shellcode:");
+        let wrapped_lines: Vec<std::borrow::Cow<str>> = wrap(sh_code.as_str(), 56);
+        for each_wrp_ln in &wrapped_lines {
+            println!("{}", each_wrp_ln);
+        }
     } else {
         eprintln!(
             "From winterrdog,\n[-] shellcode-myner is either: 
