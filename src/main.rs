@@ -106,13 +106,13 @@ fn main() {
         }
     } else {
         eprintln!(
-            "From winterrdog,\n[-] shellcode-myner is either: 
-            [1] NOT provided a binary( at the cmdline ) to extract from shellcode.
+            "From winterrdog,\n[-] either: 
+            [1] shellcode-myner is NOT provided a binary( at the cmdline ) to extract from shellcode.
                 Usage:  cargo run <binary_to_scan>
                                     OR
-                        target/debug/shellcode-myner <binary_to_inspect>
+                        ./shellcode-myner <binary_to_inspect>
 
-            [2] NOT installed
+            [2] 'binutils' NOT installed
                 Please use your package manager to install 'binutils' or download and install
                 them from the Internet e.g. for UNIX systems, check for installation procedures at
                 https://command-not-found.com/objdump."
