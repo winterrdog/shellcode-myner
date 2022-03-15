@@ -27,7 +27,7 @@ I hope it will speedup your exploitation workflow.
             
         ```sh
         cd shellcode-myner
-        ./install.sh
+        bash install.sh
         ```
     ## OPTIONAL:
     * You can choose to make a symbolic link for the `shellcode-myner` executable like so:
