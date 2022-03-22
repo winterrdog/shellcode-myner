@@ -50,6 +50,28 @@ fn extract_opcodes(opcode_text: &str) -> regex::Matches<'_, '_> {
     RE.find_iter(opcode_text)
 }
 
+fn usage_error_msg() {
+    eprintln!(
+        "From winterrdog,\n[-] shellcode-myner is either: 
+        [1] NOT provided a binary( at the cmdline ) to extract from shellcode.
+            Usage:  cargo run <binary_to_scan>
+                                OR
+                    ./shellcode-myner <binary_to_inspect>
+
+        [2] 'binutils' NOT installed
+            Please use your package manager to install 'binutils' or download and install
+            them from the Internet e.g. for UNIX systems, check for installation procedures at
+            https://command-not-found.com/objdump."
+    );
+}
+
+fn display_wrapped_output(msg: &str) {
+    let wrapped_lines: Vec<std::borrow::Cow<str>> = wrap(msg, 56);
+    for each_wrp_ln in &wrapped_lines {
+        println!("{}", each_wrp_ln);
+    }
+}
+
 fn main() {
     // Run objdump to obtain the text segment's opcodes
     let objdp_out: Output = Command::new("objdump")
@@ -100,22 +122,8 @@ fn main() {
 
         // Printing shellcode
         println!("Shellcode:");
-        let wrapped_lines: Vec<std::borrow::Cow<str>> = wrap(sh_code.as_str(), 56);
-        for each_wrp_ln in &wrapped_lines {
-            println!("{}", each_wrp_ln);
-        }
+        display_wrapped_output(sh_code.as_str())
     } else {
-        eprintln!(
-            "From winterrdog,\n[-] either: 
-            [1] shellcode-myner is NOT provided a binary( at the cmdline ) to extract from shellcode.
-                Usage:  cargo run <binary_to_scan>
-                                    OR
-                        ./shellcode-myner <binary_to_inspect>
-
-            [2] 'binutils' NOT installed
-                Please use your package manager to install 'binutils' or download and install
-                them from the Internet e.g. for UNIX systems, check for installation procedures at
-                https://command-not-found.com/objdump."
-        );
+        usage_error_msg()
     }
 }
