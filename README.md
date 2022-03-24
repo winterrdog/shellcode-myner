@@ -6,7 +6,7 @@ I hope it will speedup your exploitation workflow.
 * Target operating system: A Unix-like OS e.g. MacOS, GNU/Linux, FreeBSD, OpenBSD, GhostBSD.
 * **objdump** should be installed. _In case objdump is not installed on your system, follow these [instructions](https://command-not-found.com/objdump) on how to do that._
 * **Rust** and **Cargo** should be installed. _In case they're not installed on your system, you can follow these [instructions](https://www.rust-lang.org/tools/install) on how to do that._
-* Some commandline-Fu.
+* Some commandline-Fu( _just a little_ ).
 
 # ⚙👷 HOW IT WORKS
 * `shellcode-myner` is given a binary file to inspect and parse at the command line.
