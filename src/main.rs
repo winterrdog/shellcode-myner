@@ -72,30 +72,18 @@ fn display_wrapped_output(msg: &str) {
     }
 }
 
-fn main() {
-    // Run objdump to obtain the text segment's opcodes
-    let objdp_out: Output = Command::new("objdump")
-        .args([
-            "-d",
-            env::args()
-                .nth(1)
-                .unwrap_or_else(|| "".to_string())
-                .as_str(),
-        ])
-        .output()
-        .expect("[-] objdump failed to execute!");
-
-    let str_output: &str = str::from_utf8(&objdp_out.stdout).unwrap_or("");
-
+fn shellcode_myner(raw_dump: &str) {
+    /*
+        Extracts shellcode from the passed in raw objdump output and prints it to screen
+    */
     // Only process if there's output from objdump
-    if !str_output.is_empty() {
-        let lines = str_output
+    if !raw_dump.is_empty() {
+        let mut sh_code: String = String::new();
+        let mut sh_code_len: usize = 0;
+        let lines = raw_dump
             .split('\n')
             .map(|x| x.trim())
             .collect::<Vec<&str>>();
-
-        let mut sh_code: String = String::new();
-        let mut sh_code_len: usize = 0;
 
         // Get disassembly from objdump output
         for each_single_line in &lines {
@@ -127,3 +115,21 @@ fn main() {
         usage_error_msg()
     }
 }
+
+fn main() {
+    // Run objdump to obtain the text segment's opcodes
+    let raw_objdp_out: Output = Command::new("objdump")
+        .args([
+            "-d",
+            env::args()
+                .nth(1)
+                .unwrap_or_else(|| "".to_string())
+                .as_str(),
+        ])
+        .output()
+        .expect("[-] objdump failed to execute!");
+
+    let str_objdp_out: &str = str::from_utf8(&raw_objdp_out.stdout).unwrap_or("");
+    shellcode_myner(str_objdp_out);
+}
+
