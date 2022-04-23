@@ -41,7 +41,7 @@ I hope it will speedup your exploitation workflow.
     
     Then you can run it simply like any other standard Unix command-line program like `cd` or `ls`:
     ```sh
-    shellcode-myner <binary_to_inspect>
+    shellcode-myner [OPTIONS] <binary_to_inspect>
     ```
 
 # 📝 NOTES
