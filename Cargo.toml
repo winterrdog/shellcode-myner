@@ -1,12 +1,13 @@
 [package]
 name = "shellcode-myner"
-version = "1.0.0"
+version = "1.0.1"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [profile.release]
 strip = true
+lto = true
 
 [dependencies]
 regex = "1"
