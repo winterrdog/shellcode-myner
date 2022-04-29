@@ -25,7 +25,9 @@
 */
 #![warn(clippy::pedantic, clippy::all)]
 
+mod arg_parser;
 mod parser;
+
 use parser::ShellcodeMyner;
 
 fn main() {
