@@ -25,12 +25,7 @@
 */
 #![warn(clippy::pedantic, clippy::all)]
 
-extern crate clap;
-extern crate lazy_static;
-extern crate regex;
-extern crate textwrap;
-
-use clap::{arg, Arg};
+use crate::arg_parser::parse_cmd_args;
 use lazy_static::lazy_static; // for statically compiling regexes
 use regex::Regex; // For regular expressions
 use std::{process::Command, str};
@@ -81,29 +76,8 @@ impl<'a> ShellcodeMyner<'a> {
         RE.find_iter(opcode_text)
     }
 
-    fn parse_cmd_args() -> clap::Command<'a> {
-        clap::Command::new("shellcode-myner")
-            .version("1.0.0")
-            .author("winterrdog <winterrdog@protonmail.ch>")
-            .about(r#"A tool used to "painlessly" extract shellcode from an object/binary file."#)
-            .args(&[
-                arg!(<BINARY> "Binary/Object file to extract from shellcode."),
-                Arg::new("array")
-                    .short('a')
-                    .takes_value(false)
-                    .required_unless_present("string")
-                    .conflicts_with("string")
-                    .help("Outputs the shellcode in form of C-style array."),
-                Arg::new("string")
-                    .short('s')
-                    .takes_value(false)
-                    .conflicts_with("array")
-                    .help("Outputs the shellcode in form of C-style character string format"),
-            ])
-    }
-
     pub fn run(&'a mut self) {
-        let mut arg_vec_handle = ShellcodeMyner::parse_cmd_args();
+        let mut arg_vec_handle = parse_cmd_args();
         let arg_vec = arg_vec_handle.get_matches_mut();
         let tgt_bin = if let Some(name) = arg_vec.value_of("BINARY") {
             name
