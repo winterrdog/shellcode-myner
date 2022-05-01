@@ -26,9 +26,10 @@
 #![warn(clippy::pedantic, clippy::all)]
 
 mod arg_parser;
-mod parser;
+mod myner_regex;
+mod shellcode_parser;
 
-use parser::ShellcodeMyner;
+use shellcode_parser::ShellcodeMyner;
 
 fn main() {
     let mut sh_code_myn = ShellcodeMyner::default();
