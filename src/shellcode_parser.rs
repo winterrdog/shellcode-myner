@@ -153,16 +153,18 @@ impl<'a> ShellcodeMyner<'a> {
 
         self.display_intro();
 
-        for _ in 0..2 {
+        (0..2).for_each(|_| {
             self.sh_code.pop();
-        }
+        });
 
         println!("{{");
         self.display_wrapped_output(true);
         println!("}};");
+
+        self.save_shellcode(arg_handle);
     }
 
-    fn sh_code_str_fmt(&'a mut self) {
+    fn sh_code_str_fmt(&'a mut self, arg_handle: &ArgMatches) {
         self.objdmp_lines = self.objdmp_out.split('\n').map(str::trim).collect();
 
         for each_single_line in &self.objdmp_lines {
