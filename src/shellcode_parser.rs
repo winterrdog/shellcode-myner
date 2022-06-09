@@ -26,7 +26,8 @@
 #![warn(clippy::pedantic, clippy::all)]
 
 use crate::{arg_parser::parse_cmd_args, myner_regex};
-use std::{process::Command, str};
+use clap::ArgMatches;
+use std::{fs::File, io::Write, process::Command, str};
 use textwrap::wrap; // to run objdump // for cmd-line args parsing
 
 #[derive(Debug, Default)]
@@ -41,6 +42,36 @@ impl<'a> ShellcodeMyner<'a> {
     /*
         Extracts shellcode from the passed in raw objdump output and prints it to screen
     */
+
+    fn save_shellcode(&self, arg_handle: &ArgMatches) {
+        let fname = "extracted_shellcode.c";
+        let file_path = std::path::Path::new(fname);
+        if file_path.exists() {
+            println!("File, {:?}, already exists!", fname);
+            return;
+        }
+
+        let mut fh = File::create(fname).expect("Failed to create file");
+        let content = if arg_handle.is_present("array") {
+            format!(
+                "#include <stdio.h>\n#include <stdlib.h>\n\nstatic unsigned char shellcode[] =\n{{ {} }};\n",
+                self.sh_code
+            )
+        } else {
+            format!(
+                "#include <stdio.h>\n#include <stdlib.h>\n\nstatic const char *const shellcode =\n\"{}\n",
+                self.sh_code
+            )
+        };
+
+        let res_write = fh.write_all(content.as_bytes());
+        std::mem::drop(res_write);
+
+        println!(
+            "\n[+] Shellcode saved to: {:?}.",
+            file_path.canonicalize().unwrap().as_os_str()
+        );
+    }
 
     fn display_intro(&self) {
         // Display extracted shellcode
@@ -79,9 +110,9 @@ impl<'a> ShellcodeMyner<'a> {
         if self.objdmp_out.is_empty() {
             let _m = arg_vec_handle.print_long_help();
         } else if arg_vec.is_present("array") {
-            self.sh_code_arr_fmt();
+            self.sh_code_arr_fmt(&arg_vec);
         } else if arg_vec.is_present("string") {
-            self.sh_code_str_fmt();
+            self.sh_code_str_fmt(&arg_vec);
         } else {
             println!(r#"[-] You have to pass at most one of these 2 options: "-a" or "-s"."#,);
             let _n = arg_vec_handle.print_long_help();
@@ -99,7 +130,7 @@ impl<'a> ShellcodeMyner<'a> {
         }
     }
 
-    fn sh_code_arr_fmt(&'a mut self) {
+    fn sh_code_arr_fmt(&'a mut self, arg_handle: &ArgMatches) {
         self.objdmp_lines = self.objdmp_out.split('\n').map(str::trim).collect();
 
         for each_single_line in &self.objdmp_lines {
@@ -156,6 +187,8 @@ impl<'a> ShellcodeMyner<'a> {
         self.display_intro();
         print!(r#"""#);
         self.display_wrapped_output(false);
+
+        self.save_shellcode(arg_handle);
     }
 
     // fn usage_error_msg() {
