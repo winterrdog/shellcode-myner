@@ -99,7 +99,7 @@ impl<'a> ShellcodeMyner<'a> {
     pub fn run(&'a mut self) {
         let mut arg_vec_handle = parse_cmd_args();
         let arg_vec = arg_vec_handle.get_matches_mut();
-        let tgt_bin = if let Some(name) = arg_vec.value_of("BINARY") {
+        let tgt_bin: &str = if let Some(name) = arg_vec.value_of("BINARY") {
             name
         } else {
             ""
