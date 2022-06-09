@@ -1,6 +1,5 @@
 /target
 shellcode-myner
-Cargo.lock
 test.sh
 write_to_file.rs
-extracted_shellcode.c
+*.c
