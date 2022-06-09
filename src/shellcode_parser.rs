@@ -28,7 +28,7 @@
 use crate::{arg_parser::parse_cmd_args, myner_regex};
 use clap::ArgMatches;
 use std::{fs::File, io::Write, process::Command, str};
-use textwrap::wrap; // to run objdump // for cmd-line args parsing
+use textwrap::wrap; // to run objdump
 
 #[derive(Debug, Default)]
 pub struct ShellcodeMyner<'a> {
