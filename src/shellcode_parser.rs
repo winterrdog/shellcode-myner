@@ -44,15 +44,17 @@ impl<'a> ShellcodeMyner<'a> {
     */
 
     fn save_shellcode(&self, arg_handle: &ArgMatches) {
-        let fname = "extracted_shellcode.c";
-        let file_path = std::path::Path::new(fname);
+        let file_path: &std::path::Path = std::path::Path::new(arg_handle.value_of("output").unwrap());
         if file_path.exists() {
-            println!("File, {:?}, already exists!", fname);
+            eprintln!(
+                "\n[-] File, {:?}, already exists! Please try to DELETE it or CHANGE the specified file name at the command-line.",
+                file_path.as_os_str()
+            );
             return;
         }
 
-        let mut fh = File::create(fname).expect("Failed to create file");
-        let content = if arg_handle.is_present("array") {
+        let mut fh: File = File::create(file_path).expect("Failed to create file");
+        let content: String = if arg_handle.is_present("array") {
             format!(
                 "#include <stdio.h>\n#include <stdlib.h>\n\nstatic unsigned char shellcode[] =\n{{ {} }};\n",
                 self.sh_code
@@ -64,8 +66,9 @@ impl<'a> ShellcodeMyner<'a> {
             )
         };
 
-        let res_write = fh.write_all(content.as_bytes());
-        std::mem::drop(res_write);
+        {
+            let _res_write = fh.write_all(content.as_bytes());
+        }
 
         println!(
             "\n[+] Shellcode saved to: {:?}.",
@@ -161,7 +164,9 @@ impl<'a> ShellcodeMyner<'a> {
         self.display_wrapped_output(true);
         println!("}};");
 
-        self.save_shellcode(arg_handle);
+        if arg_handle.is_present("output") {
+            self.save_shellcode(arg_handle);
+        }
     }
 
     fn sh_code_str_fmt(&'a mut self, arg_handle: &ArgMatches) {
@@ -190,7 +195,9 @@ impl<'a> ShellcodeMyner<'a> {
         print!(r#"""#);
         self.display_wrapped_output(false);
 
-        self.save_shellcode(arg_handle);
+        if arg_handle.is_present("output") {
+            self.save_shellcode(arg_handle);
+        }
     }
 
     // fn usage_error_msg() {
