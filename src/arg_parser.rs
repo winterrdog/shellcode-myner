@@ -44,5 +44,9 @@ pub fn parse_cmd_args<'a>() -> clap::Command<'a> {
                 .takes_value(false)
                 .conflicts_with("array")
                 .help("Outputs the shellcode in form of C-style character string format"),
+            Arg::new("output")
+                .short('o')
+                .takes_value(true)
+                .help("Specify the file or file path where the shellcode will be saved to."),
         ])
 }
